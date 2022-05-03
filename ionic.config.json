@@ -1,0 +1,7 @@
+{
+  "name": "MCDApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
