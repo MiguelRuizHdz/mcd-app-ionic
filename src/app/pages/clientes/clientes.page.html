@@ -1,0 +1,55 @@
+<ion-header mode="ios">
+  <ion-toolbar >
+    <ion-title>
+      Clientes
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- Searchbar with cancel button never shown -->
+  <ion-searchbar mode="ios" placeholder="Buscar" showCancelButton="never"></ion-searchbar>
+
+
+  <!-- List of Text Items -->
+  <ion-list>
+    <ion-item button detail>
+      <ion-avatar slot="start">
+        <img src="./assets/avatars/Elliot.png" />
+      </ion-avatar>
+      <ion-label>
+        <h2>Elliot Graf</h2>
+        <!-- <h5 [ngClass]="Condition ? 'className' : Condition ? 'className' : Condition ? 'className' : 'defaultclassName'">Pago atrasado</h5> -->
+        <h5 class="danger">Pago atrasado</h5>
+      </ion-label>
+    </ion-item>
+    <ion-item button detail>
+      <ion-avatar slot="start">
+        <img src="./assets/avatars/Erick.png" />
+      </ion-avatar>
+      <ion-label>
+        <h2>Erick Cowell</h2>
+        <h5 class="warning">Pago pendiente</h5>
+      </ion-label>
+    </ion-item>
+    <ion-item button detail>
+      <ion-avatar slot="start">
+        <img src="./assets/avatars/Andols.png" />
+      </ion-avatar>
+      <ion-label>
+        <h2>Andols Hamrick</h2>
+        <h5 class="success">Al corriente</h5>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+
+  <!-- fab placed to the top end -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="agregarCliente()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

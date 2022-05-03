@@ -1,0 +1,31 @@
+h2 {
+    font-weight: 500;
+    font-size: 20px;
+}
+
+h5 {
+    font-weight: 500;
+    font-size: 15px;
+}
+
+ion-item {
+    --min-height: 96px;
+    --detail-icon-font-size: 30px;
+    --border-color: transparent;
+}
+
+ion-avatar { 
+    width: 75px;  
+    height: 75px;  
+}
+
+.danger {
+    color: #EB445A;
+}
+.warning {
+    color: #FFC409;
+}
+.success {
+    color: #2DD36F;
+}
+
