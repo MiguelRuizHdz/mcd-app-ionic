@@ -24,3 +24,16 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+div.searchbar-input-container.sc-ion-searchbar-ios {
+    height: 49px;
+}
+
+.fab-vertical-bottom{
+    bottom: 20px;
+}
+
+.fab-horizontal-end{
+    right: calc(20px + var(--ion-safe-area-right, 0px));
+}

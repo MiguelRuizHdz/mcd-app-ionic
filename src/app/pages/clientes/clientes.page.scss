@@ -14,10 +14,41 @@ ion-item {
     --border-color: transparent;
 }
 
+ion-searchbar {
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 90px;
+}
+
+ion-title {
+    font-size: 22px;
+}
+
 ion-avatar { 
     width: 75px;  
     height: 75px;  
 }
+
+ion-fab-button {
+    width: 64px;
+    height: 64px;    
+}
+
+ion-icon {
+    font-size: 26px;
+}
+
+@media screen and (min-width: 350px) {
+    ion-fab-button {
+        width: 74px;
+        height: 74px;    
+    }
+
+    ion-icon {
+        font-size: 30px;
+    }
+}
+
 
 .danger {
     color: #EB445A;
