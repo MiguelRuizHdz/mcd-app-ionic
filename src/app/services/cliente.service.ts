@@ -1,34 +1,91 @@
 import { Injectable } from '@angular/core';
+import { Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { Cliente } from '../interfaces/Clientes';
-import { UiServiceService } from './ui-service.service';
+import { UiService } from './ui-service.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClienteService {
 
+  idClienteContador = 0;
+
   clientes: Cliente[] = [];
   busquedaClientes: Cliente[] = [];
 
   constructor(private storage: Storage,
-              private uiService: UiServiceService) {
+              private platform: Platform,
+              private uiService: UiService) {
     this.storage.create();
     this.cargarClientes();
+    this.cargarContadorId();
   }
 
   async guardarCliente( cliente: Cliente ){
     this.clientes.unshift( cliente );
-    await this.storage.set('clientes', this.clientes );
+
+    if( this.platform.is('capacitor')){
+      // dispositivo
+      await this.storage.set('clientes', this.clientes);
+    } else {
+      // computadora
+      localStorage.setItem('clientes', JSON.stringify( this.clientes ) );
+    }
+
     this.uiService.presentToast('Se agregó a clientes');
+    this.idClienteContador++;
   }
 
   async cargarClientes(){
-    const clientes = await this.storage.get('clientes');
-    if ( clientes ){
-      this.clientes = clientes;
-    }
+
+    return new Promise( async (resolve, reject ) => {
+
+      if( this.platform.is('capacitor') ) {
+        // dispositivo
+        await this.storage.get('clientes').then( clientes => {
+          if (clientes) {
+            this.clientes = clientes;
+          }
+          resolve(true);
+        });
+      } else {
+        // computadora
+        if ( localStorage.getItem('clientes') ) {
+          // Existe clientes en el localStorage
+          this.clientes = JSON.parse( localStorage.getItem('clientes') );
+        }
+        resolve(true);
+      }
+    });
+
   }
+
+  async cargarContadorId(){
+
+    return new Promise( async (resolve, reject ) => {
+
+      if( this.platform.is('capacitor') ) {
+        // dispositivo
+        await this.storage.get('idClienteContador').then( idCliente => {
+          if (idCliente) {
+            this.idClienteContador = idCliente;
+          }
+          resolve(true);
+        });
+      } else {
+        // computadora
+        if ( localStorage.getItem('idClienteContador') ) {
+          // Existe idClienteContador en el localStorage
+          this.idClienteContador = JSON.parse( localStorage.getItem('idClienteContador') );
+        }
+        resolve(true);
+      }
+    });
+
+  }
+
+
 
   buscarCliente( termino: string ) {
     this.busquedaClientes = [];

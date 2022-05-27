@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
 
 import { Pago } from '../interfaces/Pagos';
-import { UiServiceService } from './ui-service.service';
+import { UiService } from './ui-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class PagoService {
   pagos: Pago[] = [];
 
   constructor(private storage: Storage,
-              private uiService: UiServiceService) {
+              private uiService: UiService) {
     this.storage.create();
     this.cargarPagos();
   }

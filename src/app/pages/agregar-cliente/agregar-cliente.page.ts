@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import {Location} from '@angular/common';
+import { NgForm } from '@angular/forms';
 import { NavController } from '@ionic/angular';
+import { Cliente } from '../../interfaces/Clientes';
+import { ClienteService } from '../../services/cliente.service';
+import { UiService as UiService } from '../../services/ui-service.service';
 
 @Component({
   selector: 'app-agregar-cliente',
@@ -10,17 +12,37 @@ import { NavController } from '@ionic/angular';
 })
 export class AgregarClientePage implements OnInit {
 
-  constructor(private navCtrl: NavController) { }
+  nuevoCliente: Cliente = {
+    id: this.clienteService.idClienteContador,
+    nombre: '',
+    apellido: '',
+    correo: '',
+    direccion: '',
+    telefono: 0,
+    foto: '',
+  };
+
+  constructor(private clienteService: ClienteService,
+    private uiService: UiService,
+    private navCtrl: NavController) { }
 
   ngOnInit() {
   }
 
   addFoto(){
-
+    this.uiService.presentToast('Proximamente');
   }
 
-  guardarCliente(){
-    this.navCtrl.navigateBack('tabs/clientes');  
+  guardarCliente( fNuevoCliente: NgForm ){
+
+
+    if ( fNuevoCliente.invalid ) {
+      this.uiService.presentToast('Llene los campos correctamente');
+      return;
+    }
+
+    this.clienteService.guardarCliente(this.nuevoCliente);
+    this.navCtrl.navigateBack('tabs/clientes');
   }
 
 }
