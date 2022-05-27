@@ -32,14 +32,13 @@
       <ion-label position="fixed">Apellidos</ion-label>
       <ion-input name="apellido" type="text" [(ngModel)]="nuevoCliente.apellido" pattern="([A-Za-zñÑáéíóúÁÉÍÓÚ\s]{2,35})"></ion-input>
     </ion-item>
-    <br><br>
     <ion-item>
       <ion-label position="fixed">Número</ion-label>
       <ion-input name="telefono" type="tel" [(ngModel)]="nuevoCliente.telefono"></ion-input>
     </ion-item>
+    <span *ngIf="!nuevoCliente.valid" class="text-danger">El correo debe ser válido.</span>
     <ion-item>
       <!-- <span *ngIf="nuevoCliente.submitted  && nuevoCliente.controls['correo'].errors" class="text-danger">El correo debe ser valido</span> -->
-      <span *ngIf="!nuevoCliente.valid" class="text-danger">El correo debe ser valido</span>
       <ion-label position="fixed">Correo</ion-label>
       <ion-input name="correo" type="email" [(ngModel)]="nuevoCliente.correo" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"></ion-input>
     </ion-item>
