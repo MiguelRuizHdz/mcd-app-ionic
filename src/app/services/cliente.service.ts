@@ -9,6 +9,7 @@ import { UiServiceService } from './ui-service.service';
 export class ClienteService {
 
   clientes: Cliente[] = [];
+  busquedaClientes: Cliente[] = [];
 
   constructor(private storage: Storage,
               private uiService: UiServiceService) {
@@ -27,6 +28,17 @@ export class ClienteService {
     if ( clientes ){
       this.clientes = clientes;
     }
+  }
+
+  buscarCliente( termino: string ) {
+    this.busquedaClientes = [];
+    for( const cliente of this.clientes ) {
+      if (cliente.nombre.includes(termino) || cliente.apellido.includes(termino)) {
+        this.busquedaClientes.unshift( cliente );
+      }
+    }
+
+    return this.busquedaClientes;
   }
 
 }
