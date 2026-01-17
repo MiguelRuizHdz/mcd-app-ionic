@@ -23,7 +23,7 @@
   <br>
   <form #fNuevoCliente="ngForm">
     <!-- <span *ngIf="nuevoCliente.submitted && nuevoCliente.controls['nombre'].errors" class="text-danger">El nombre debe de contener solo letras.</span> -->
-    <span *ngIf="!nuevoCliente.valid" class="text-danger">El nombre debe de contener solo letras.</span>
+    <span *ngIf="fNuevoCliente.controls['nombre']?.invalid && fNuevoCliente.controls['nombre']?.touched" class="text-danger">El nombre debe de contener solo letras.</span>
     <ion-item>
       <ion-label position="fixed">Nombre</ion-label>
       <ion-input name="nombre" type="text" [(ngModel)]="nuevoCliente.nombre" pattern="([A-Za-zñÑáéíóúÁÉÍÓÚ\s]{2,35})" required="required"></ion-input>
@@ -36,7 +36,7 @@
       <ion-label position="fixed">Número</ion-label>
       <ion-input name="telefono" type="tel" [(ngModel)]="nuevoCliente.telefono"></ion-input>
     </ion-item>
-    <span *ngIf="!nuevoCliente.valid" class="text-danger">El correo debe ser válido.</span>
+    <span *ngIf="fNuevoCliente.controls['correo']?.invalid && fNuevoCliente.controls['correo']?.touched" class="text-danger">El correo debe ser válido.</span>
     <ion-item>
       <!-- <span *ngIf="nuevoCliente.submitted  && nuevoCliente.controls['correo'].errors" class="text-danger">El correo debe ser valido</span> -->
       <ion-label position="fixed">Correo</ion-label>

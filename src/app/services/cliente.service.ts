@@ -15,35 +15,35 @@ export class ClienteService {
   busquedaClientes: Cliente[] = [];
 
   constructor(private storage: Storage,
-              private platform: Platform,
-              private uiService: UiService) {
+    private platform: Platform,
+    private uiService: UiService) {
     this.storage.create();
     this.cargarClientes();
     this.cargarContadorId();
   }
 
-  async guardarCliente( cliente: Cliente ){
-    this.clientes.unshift( cliente );
+  async guardarCliente(cliente: Cliente) {
+    this.clientes.unshift(cliente);
 
-    if( this.platform.is('capacitor')){
+    if (this.platform.is('capacitor')) {
       // dispositivo
       await this.storage.set('clientes', this.clientes);
     } else {
       // computadora
-      localStorage.setItem('clientes', JSON.stringify( this.clientes ) );
+      localStorage.setItem('clientes', JSON.stringify(this.clientes));
     }
 
     this.uiService.presentToast('Se agregó a clientes');
     this.idClienteContador++;
   }
 
-  async cargarClientes(){
+  async cargarClientes() {
 
-    return new Promise( async (resolve, reject ) => {
+    return new Promise(async (resolve, reject) => {
 
-      if( this.platform.is('capacitor') ) {
+      if (this.platform.is('capacitor')) {
         // dispositivo
-        await this.storage.get('clientes').then( clientes => {
+        await this.storage.get('clientes').then(clientes => {
           if (clientes) {
             this.clientes = clientes;
           }
@@ -51,9 +51,10 @@ export class ClienteService {
         });
       } else {
         // computadora
-        if ( localStorage.getItem('clientes') ) {
+        const clientesLocal = localStorage.getItem('clientes');
+        if (clientesLocal) {
           // Existe clientes en el localStorage
-          this.clientes = JSON.parse( localStorage.getItem('clientes') );
+          this.clientes = JSON.parse(clientesLocal);
         }
         resolve(true);
       }
@@ -61,13 +62,13 @@ export class ClienteService {
 
   }
 
-  async cargarContadorId(){
+  async cargarContadorId() {
 
-    return new Promise( async (resolve, reject ) => {
+    return new Promise(async (resolve, reject) => {
 
-      if( this.platform.is('capacitor') ) {
+      if (this.platform.is('capacitor')) {
         // dispositivo
-        await this.storage.get('idClienteContador').then( idCliente => {
+        await this.storage.get('idClienteContador').then(idCliente => {
           if (idCliente) {
             this.idClienteContador = idCliente;
           }
@@ -75,9 +76,10 @@ export class ClienteService {
         });
       } else {
         // computadora
-        if ( localStorage.getItem('idClienteContador') ) {
+        const contadorLocal = localStorage.getItem('idClienteContador');
+        if (contadorLocal) {
           // Existe idClienteContador en el localStorage
-          this.idClienteContador = JSON.parse( localStorage.getItem('idClienteContador') );
+          this.idClienteContador = JSON.parse(contadorLocal);
         }
         resolve(true);
       }
@@ -87,11 +89,11 @@ export class ClienteService {
 
 
 
-  buscarCliente( termino: string ) {
+  buscarCliente(termino: string) {
     this.busquedaClientes = [];
-    for( const cliente of this.clientes ) {
-      if (cliente.nombre.includes(termino) || cliente.apellido.includes(termino)) {
-        this.busquedaClientes.unshift( cliente );
+    for (const cliente of this.clientes) {
+      if (cliente.nombre.includes(termino) || cliente.apellido?.includes(termino)) {
+        this.busquedaClientes.unshift(cliente);
       }
     }
 
