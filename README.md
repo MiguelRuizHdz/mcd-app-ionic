@@ -46,10 +46,21 @@ En tu iPhone, ve a:
 
 ## 🎨 Generación de Iconos y Splash Screen
 Para actualizar el diseño de la app:
-1.  Coloca tus archivos `icon.png` (1024x1024) y `splash.png` (2732x2732) en la carpeta `/assets`.
-2.  Ejecuta:
+1.  **Icono**: Coloca `icon.png` (1024x1024) en la carpeta `/assets`.
+2.  **Splash Screen**: Coloca `splash.png` y `splash-dark.png` (2732x2732) en la carpeta `/assets`.
+    *   *Nota: Es importante tener la versión dark para que se vea correctamente en Modo Oscuro.*
+3.  **Generar**:
     ```bash
+    # Genera todos los tamaños para iOS
     npx @capacitor/assets generate --ios
+    
+    # Sincroniza con el proyecto nativo
     npx cap sync ios
     ```
 
+### 💡 Tips para el Splash Screen en iOS
+Si después de generar los archivos sigues viendo el logo viejo o una pantalla vacía:
+- **Borra la app** de tu iPhone.
+- En Xcode, ve a **Product > Clean Build Folder**.
+- Vuelve a instalar la app (`Play ▶️`).
+- iOS guarda una caché muy fuerte del Launch Screen y a veces requiere borrar la app para refrescarse.
