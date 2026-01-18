@@ -23,28 +23,33 @@
   <br>
   <form #fNuevoCliente="ngForm">
     <!-- <span *ngIf="nuevoCliente.submitted && nuevoCliente.controls['nombre'].errors" class="text-danger">El nombre debe de contener solo letras.</span> -->
-    <span *ngIf="fNuevoCliente.controls['nombre']?.invalid && fNuevoCliente.controls['nombre']?.touched" class="text-danger">El nombre debe de contener solo letras.</span>
+    <span *ngIf="fNuevoCliente.controls['nombre']?.invalid && fNuevoCliente.controls['nombre']?.touched"
+      class="text-danger">El nombre debe de contener solo letras.</span>
     <ion-item>
       <ion-label position="fixed">Nombre</ion-label>
-      <ion-input name="nombre" type="text" [(ngModel)]="nuevoCliente.nombre" pattern="([A-Za-zñÑáéíóúÁÉÍÓÚ\s]{2,35})" required="required"></ion-input>
+      <ion-input name="nombre" type="text" [(ngModel)]="nuevoCliente.nombre" pattern="([A-Za-zñÑáéíóúÁÉÍÓÚ\s]{2,35})"
+        required="required"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="fixed">Apellidos</ion-label>
-      <ion-input name="apellido" type="text" [(ngModel)]="nuevoCliente.apellido" pattern="([A-Za-zñÑáéíóúÁÉÍÓÚ\s]{2,35})"></ion-input>
+      <ion-input name="apellido" type="text" [(ngModel)]="nuevoCliente.apellido"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="fixed">Número</ion-label>
       <ion-input name="telefono" type="tel" [(ngModel)]="nuevoCliente.telefono"></ion-input>
     </ion-item>
-    <span *ngIf="fNuevoCliente.controls['correo']?.invalid && fNuevoCliente.controls['correo']?.touched" class="text-danger">El correo debe ser válido.</span>
+    <span *ngIf="fNuevoCliente.controls['correo']?.invalid && fNuevoCliente.controls['correo']?.touched"
+      class="text-danger">El correo debe ser válido.</span>
     <ion-item>
       <!-- <span *ngIf="nuevoCliente.submitted  && nuevoCliente.controls['correo'].errors" class="text-danger">El correo debe ser valido</span> -->
       <ion-label position="fixed">Correo</ion-label>
-      <ion-input name="correo" type="email" [(ngModel)]="nuevoCliente.correo" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"></ion-input>
+      <ion-input name="correo" type="email" [(ngModel)]="nuevoCliente.correo"
+        pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="fixed">Dirección</ion-label>
-      <ion-input name="direccion" type="text" [(ngModel)]="nuevoCliente.direccion" pattern="([A-Za-zñÑáéíóúÁÉÍÓÚ\s]{2,35})"></ion-input>
+      <ion-input name="direccion" type="text" [(ngModel)]="nuevoCliente.direccion"
+        pattern="^[A-Za-z0-9ñÑáéíóúÁÉÍÓÚ\s\.,#-]{2,100}$"></ion-input>
     </ion-item>
   </form>
 </ion-content>
