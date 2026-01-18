@@ -69,6 +69,13 @@ export class DetalleClientePage implements OnInit {
     if (this.cliente?.telefono) window.open(`sms:${this.cliente.telefono}`, '_system');
   }
 
+  whatsapp() {
+    if (this.cliente?.telefono) {
+      const url = `https://api.whatsapp.com/send?phone=${this.cliente.telefono}&text=${encodeURIComponent('Hola!')}`;
+      window.open(url, '_system');
+    }
+  }
+
   correo() {
     if (this.cliente?.correo) window.open(`mailto:${this.cliente.correo}`, '_system');
   }

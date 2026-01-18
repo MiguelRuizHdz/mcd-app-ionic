@@ -29,6 +29,9 @@
       <ion-button fill="clear" (click)="mensaje()" [disabled]="!cliente?.telefono">
         <ion-icon slot="icon-only" name="chatbubble"></ion-icon>
       </ion-button>
+      <ion-button fill="clear" (click)="whatsapp()" [disabled]="!cliente?.telefono">
+        <ion-icon slot="icon-only" name="logo-whatsapp"></ion-icon>
+      </ion-button>
       <ion-button fill="clear" (click)="correo()" [disabled]="!cliente?.correo">
         <ion-icon slot="icon-only" name="mail"></ion-icon>
       </ion-button>
