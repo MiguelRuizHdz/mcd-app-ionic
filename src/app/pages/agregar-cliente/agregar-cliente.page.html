@@ -13,7 +13,10 @@
 <ion-content>
   <ion-row>
     <ion-col size="12" class="ion-text-center">
-      <img src="./assets/avatars/FotoCamara.png" alt="">
+      <div class="photo-container">
+        <img [src]="nuevoCliente.foto ? nuevoCliente.foto : './assets/avatars/FotoCamara.png'" class="profile-photo"
+          alt="Foto del cliente">
+      </div>
       <ion-button (click)="addFoto()" expand="block" fill="clear">
         Añadir foto
       </ion-button>

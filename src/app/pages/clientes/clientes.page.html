@@ -45,7 +45,7 @@
 
     <ion-item button detail *ngFor="let cliente of clienteService.clientes">
       <ion-avatar slot="start">
-        <img src="./assets/avatars/FotoCamara.png" />
+        <img [src]="cliente.foto ? cliente.foto : './assets/avatars/FotoCamara.png'" />
       </ion-avatar>
       <ion-label>
         <h2>{{ cliente.nombre }} {{ cliente.apellido }}</h2>

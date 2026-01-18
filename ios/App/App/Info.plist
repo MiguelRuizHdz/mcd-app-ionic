@@ -45,5 +45,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Para poder tomar fotos de los clientes.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Para poder guardar fotos de los clientes.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Para poder elegir fotos de los clientes.</string>
 </dict>
 </plist>

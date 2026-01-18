@@ -4,6 +4,7 @@ import { NavController } from '@ionic/angular';
 import { Cliente } from '../../interfaces/Clientes';
 import { ClienteService } from '../../services/cliente.service';
 import { UiService as UiService } from '../../services/ui-service.service';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 @Component({
   selector: 'app-agregar-cliente',
@@ -29,14 +30,26 @@ export class AgregarClientePage implements OnInit {
   ngOnInit() {
   }
 
-  addFoto(){
-    this.uiService.presentToast('Proximamente');
+  async addFoto() {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.Base64,
+      source: CameraSource.Prompt,
+      promptLabelHeader: 'Elegir foto',
+      promptLabelPhoto: 'De la galería',
+      promptLabelPicture: 'Tomar foto'
+    });
+
+    if (image.base64String) {
+      this.nuevoCliente.foto = `data:image/${image.format};base64,${image.base64String}`;
+    }
   }
 
-  guardarCliente( fNuevoCliente: NgForm ){
+  guardarCliente(fNuevoCliente: NgForm) {
 
 
-    if ( fNuevoCliente.invalid ) {
+    if (fNuevoCliente.invalid) {
       this.uiService.presentToast('Llene los campos correctamente');
       return;
     }
