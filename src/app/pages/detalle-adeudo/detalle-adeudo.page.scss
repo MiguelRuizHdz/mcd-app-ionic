@@ -1,0 +1,27 @@
+.header-adeudo {
+    background: var(--ion-color-light);
+    border-bottom: 0.5px solid var(--ion-color-light-shade);
+    padding-top: 40px;
+    padding-bottom: 30px;
+
+    h1 {
+        font-weight: 700;
+        font-size: 1.8rem;
+    }
+
+    .saldo-deber {
+        font-size: 3rem;
+        font-weight: 800;
+        margin: 10px 0;
+    }
+}
+
+.inset-list {
+    margin: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.color-medium {
+    color: var(--ion-color-medium);
+}

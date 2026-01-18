@@ -1,0 +1,67 @@
+.user-profile-header {
+    background: var(--ion-color-light);
+    border-bottom: 0.5px solid var(--ion-color-light-shade);
+
+    .photo-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 15px;
+
+        .profile-photo {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+    }
+
+    h1 {
+        font-weight: 700;
+        font-size: 1.6rem;
+    }
+
+    .quick-actions {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+
+        ion-button {
+            --background: white;
+            --border-radius: 50%;
+            --padding-start: 12px;
+            --padding-end: 12px;
+            width: 50px;
+            height: 50px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --color: var(--ion-color-primary);
+
+            ion-icon {
+                font-size: 24px;
+            }
+        }
+    }
+}
+
+.inset-list {
+    margin: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: transparent;
+}
+
+.total-debt-item {
+    --background: var(--ion-color-light);
+    margin: 10px 0;
+
+    .debt-amount {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--ion-color-danger);
+    }
+}
+
+.color-medium {
+    color: var(--ion-color-medium);
+}

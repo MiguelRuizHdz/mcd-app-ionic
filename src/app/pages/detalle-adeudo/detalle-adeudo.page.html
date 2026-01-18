@@ -1,0 +1,77 @@
+<ion-header mode="ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalle de Adeudo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="header-adeudo ion-text-center ion-padding">
+    <h1 class="ion-no-margin">{{ adeudo?.concepto }}</h1>
+    <h2 class="saldo-deber">
+      <ion-text [color]="adeudo?.aDeber === 0 ? 'success' : 'danger'">
+        {{ adeudo?.aDeber | currency }}
+      </ion-text>
+    </h2>
+    <p class="color-medium">Pendiente por pagar</p>
+  </div>
+
+  <ion-list mode="ios" class="inset-list">
+    <ion-item>
+      <ion-label>
+        <p>Monto Original</p>
+        <h2>{{ adeudo?.precio | currency }}</h2>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <p>Vencimiento</p>
+        <h2>{{ adeudo?.fechaPagarAntesDe | date:'dd/MM/yyyy' }}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div class="actions ion-padding" *ngIf="adeudo?.aDeber! > 0">
+    <ion-button expand="block" shape="round" color="success" (click)="pagarTotal()">
+      Pagar Total
+    </ion-button>
+    <ion-button expand="block" fill="outline" shape="round" color="primary" class="ion-margin-top"
+      (click)="pagarParcial()">
+      Pago Parcial
+    </ion-button>
+  </div>
+
+  <div class="ion-padding ion-text-center" *ngIf="adeudo?.aDeber === 0">
+    <ion-chip color="success">
+      <ion-icon name="checkmark-circle"></ion-icon>
+      <ion-label>Este adeudo está liquidado</ion-label>
+    </ion-chip>
+  </div>
+
+  <!-- Historial de Abonos -->
+  <div class="ion-padding-horizontal ion-margin-top">
+    <ion-list-header mode="ios">
+      <ion-label>Historial de abonos</ion-label>
+    </ion-list-header>
+
+    <ion-list mode="ios" class="inset-list no-margin-top">
+      <ion-item *ngFor="let pago of pagos" lines="full">
+        <ion-label>
+          <h2>Abono</h2>
+          <p>{{ pago.fechaPago | date:'dd/MM/yyyy HH:mm' }}</p>
+        </ion-label>
+        <ion-note slot="end" color="success" style="font-weight: 600;">
+          + {{ pago.monto | currency }}
+        </ion-note>
+      </ion-item>
+
+      <ion-item *ngIf="pagos.length === 0" lines="none">
+        <ion-label color="medium" class="ion-text-center">
+          No hay abonos aún
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

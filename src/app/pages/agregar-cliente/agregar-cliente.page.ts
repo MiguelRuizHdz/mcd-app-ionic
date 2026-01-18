@@ -14,7 +14,7 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 export class AgregarClientePage implements OnInit {
 
   nuevoCliente: Cliente = {
-    id: this.clienteService.idClienteContador,
+    id: -1,
     nombre: '',
     apellido: '',
     correo: '',

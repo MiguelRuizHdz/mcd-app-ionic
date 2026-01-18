@@ -15,4 +15,8 @@ export class ClientesPage {
   agregarCliente() {
     this.router.navigate(['agregar-cliente']);
   }
+
+  verDetalle(cliente: any) {
+    this.router.navigate(['/detalle-cliente', cliente.id]);
+  }
 }

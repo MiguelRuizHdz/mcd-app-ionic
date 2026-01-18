@@ -8,7 +8,23 @@ const routes: Routes = [
   },
   {
     path: 'agregar-cliente',
-    loadChildren: () => import('./pages/agregar-cliente/agregar-cliente.module').then( m => m.AgregarClientePageModule)
+    loadChildren: () => import('./pages/agregar-cliente/agregar-cliente.module').then(m => m.AgregarClientePageModule)
+  },
+  {
+    path: 'detalle-cliente/:id',
+    loadChildren: () => import('./pages/detalle-cliente/detalle-cliente.module').then(m => m.DetalleClientePageModule)
+  },
+  {
+    path: 'editar-cliente/:id',
+    loadChildren: () => import('./pages/editar-cliente/editar-cliente.module').then(m => m.EditarClientePageModule)
+  },
+  {
+    path: 'nuevo-adeudo/:idCliente',
+    loadChildren: () => import('./pages/nuevo-adeudo/nuevo-adeudo.module').then(m => m.NuevoAdeudoPageModule)
+  },
+  {
+    path: 'detalle-adeudo/:id',
+    loadChildren: () => import('./pages/detalle-adeudo/detalle-adeudo.module').then(m => m.DetalleAdeudoPageModule)
   }
 ];
 @NgModule({
@@ -17,4 +33,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
