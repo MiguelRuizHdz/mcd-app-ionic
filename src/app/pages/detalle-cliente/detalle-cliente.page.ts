@@ -54,6 +54,12 @@ export class DetalleClientePage implements OnInit {
     this.router.navigate(['/detalle-adeudo', adeudo.id]);
   }
 
+  verListaCompleta() {
+    if (this.cliente) {
+      this.router.navigate(['/lista-adeudos', this.cliente.id]);
+    }
+  }
+
   // Acciones de contacto
   llamar() {
     if (this.cliente?.telefono) window.open(`tel:${this.cliente.telefono}`, '_system');

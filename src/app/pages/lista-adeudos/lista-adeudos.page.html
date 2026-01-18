@@ -1,0 +1,43 @@
+<ion-header mode="ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Adeudos de {{ cliente?.nombre }}</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-segment (ionChange)="cambioSegmento($event)" [value]="segmentoFiltro" mode="ios">
+      <ion-segment-button value="pendientes">
+        <ion-label>Pendientes</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="pagados">
+        <ion-label>Pagados</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-searchbar (ionInput)="buscarAdeudo($event)" placeholder="Buscar concepto..." mode="ios"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list mode="ios" class="inset-list">
+    <ion-item *ngFor="let adeudo of adeudosFiltrados" (click)="verDetalle(adeudo)" button detail lines="full">
+      <ion-label>
+        <h2>{{ adeudo.concepto }}</h2>
+        <p>Vence: {{ adeudo.fechaPagarAntesDe | date:'dd/MM/yyyy' }}</p>
+      </ion-label>
+      <ion-note slot="end" [color]="adeudo.aDeber === 0 ? 'success' : 'danger'">
+        {{ adeudo.aDeber | currency }}
+      </ion-note>
+    </ion-item>
+
+    <ion-item *ngIf="adeudosFiltrados.length === 0" lines="none" class="ion-text-center ion-margin-top">
+      <ion-label color="medium">
+        No se encontraron adeudos
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -25,6 +25,10 @@ const routes: Routes = [
   {
     path: 'detalle-adeudo/:id',
     loadChildren: () => import('./pages/detalle-adeudo/detalle-adeudo.module').then(m => m.DetalleAdeudoPageModule)
+  },
+  {
+    path: 'lista-adeudos/:idCliente',
+    loadChildren: () => import('./pages/lista-adeudos/lista-adeudos.module').then(m => m.ListaAdeudosPageModule)
   }
 ];
 @NgModule({

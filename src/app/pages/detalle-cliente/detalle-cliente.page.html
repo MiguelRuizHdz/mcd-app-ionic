@@ -54,34 +54,12 @@
       </ion-button>
     </ion-item>
 
-    <ion-item-divider mode="ios">
-      <ion-label>Adeudos actuales</ion-label>
-      <ion-button slot="end" fill="clear" size="small" (click)="toggleModoSeleccion()">
-        {{ modoSeleccion ? 'Cancelar' : 'Seleccionar' }}
-      </ion-button>
-    </ion-item-divider>
-
-    <ion-item *ngFor="let adeudo of adeudos" (click)="toggleSeleccion(adeudo.id)" button [detail]="!modoSeleccion"
-      lines="full">
-      <ion-checkbox slot="start" *ngIf="modoSeleccion"
-        [checked]="adeudosSeleccionados.includes(adeudo.id)"></ion-checkbox>
+    <ion-item button detail (click)="verListaCompleta()" lines="none" class="ion-margin-top">
+      <ion-icon name="list-outline" slot="start" color="primary"></ion-icon>
       <ion-label>
-        <h2>{{ adeudo.concepto }}</h2>
-        <p>Vence: {{ adeudo.fechaPagarAntesDe | date:'dd/MM/yyyy' }}</p>
+        <h2>Ver todos los adeudos</h2>
+        <p>Historial y deudas pagadas</p>
       </ion-label>
-      <ion-note slot="end" [color]="adeudo.aDeber === 0 ? 'success' : 'danger'">
-        {{ adeudo.aDeber | currency }}
-      </ion-note>
-    </ion-item>
-
-    <div class="ion-padding" *ngIf="modoSeleccion && adeudosSeleccionados.length > 0">
-      <ion-button expand="block" shape="round" color="success" (click)="pagarSeleccionados()">
-        Pagar seleccionados ({{ adeudosSeleccionados.length }})
-      </ion-button>
-    </div>
-
-    <ion-item *ngIf="adeudos.length === 0" lines="none" class="ion-text-center">
-      <ion-label color="medium">No hay adeudos registrados</ion-label>
     </ion-item>
   </ion-list>
 
