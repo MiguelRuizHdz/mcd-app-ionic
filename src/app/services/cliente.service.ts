@@ -78,6 +78,26 @@ export class ClienteService {
     this.uiService.presentToast('Cliente y sus datos eliminados');
   }
 
+  getEstadoCliente(idCliente: number) {
+    const adeudosPendientes = this.adeudos.filter(a => a.idCliente === idCliente && (a.aDeber || 0) > 0);
+
+    if (adeudosPendientes.length === 0) {
+      return { texto: 'Al corriente', clase: 'success' };
+    }
+
+    const hoy = new Date().toISOString().split('T')[0];
+    const tieneRetraso = adeudosPendientes.some(a => {
+      const fechaVence = (a.fechaPagarAntesDe || '').split('T')[0];
+      return fechaVence && fechaVence < hoy;
+    });
+
+    if (tieneRetraso) {
+      return { texto: 'Pago atrasado', clase: 'danger' };
+    } else {
+      return { texto: 'Pago pendiente', clase: 'warning' };
+    }
+  }
+
   // --- ADEUDOS ---
 
   async guardarAdeudo(adeudo: Adeudo) {
