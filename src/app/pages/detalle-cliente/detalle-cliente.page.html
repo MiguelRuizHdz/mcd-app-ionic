@@ -5,6 +5,9 @@
     </ion-buttons>
     <ion-title>Detalle</ion-title>
     <ion-buttons slot="end">
+      <ion-button (click)="confirmarEliminar()" color="danger">
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+      </ion-button>
       <ion-button (click)="editarCliente()" color="primary">
         Editar
       </ion-button>

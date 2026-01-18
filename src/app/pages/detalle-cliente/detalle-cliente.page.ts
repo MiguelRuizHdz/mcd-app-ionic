@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController, NavController } from '@ionic/angular';
 import { ClienteService } from '../../services/cliente.service';
 import { Cliente } from '../../interfaces/Clientes';
 import { Adeudo } from '../../interfaces/Adeudos';
@@ -18,7 +19,9 @@ export class DetalleClientePage implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
     private clienteService: ClienteService,
-    private router: Router) { }
+    private router: Router,
+    private alertCtrl: AlertController,
+    private navCtrl: NavController) { }
 
   ngOnInit() {
   }
@@ -57,6 +60,31 @@ export class DetalleClientePage implements OnInit {
   verListaCompleta() {
     if (this.cliente) {
       this.router.navigate(['/lista-adeudos', this.cliente.id]);
+    }
+  }
+
+  async confirmarEliminar() {
+    const alert = await this.alertCtrl.create({
+      header: '¿Eliminar cliente?',
+      message: 'Esta acción borrará permanentemente al cliente, sus deudas y pagos.',
+      mode: 'ios',
+      buttons: [
+        { text: 'Cancelar', role: 'cancel' },
+        {
+          text: 'Eliminar',
+          role: 'destructive',
+          handler: () => this.eliminar()
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  private async eliminar() {
+    if (this.cliente) {
+      await this.clienteService.eliminarCliente(this.cliente.id);
+      this.navCtrl.back();
     }
   }
 

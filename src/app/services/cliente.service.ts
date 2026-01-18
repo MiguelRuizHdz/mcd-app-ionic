@@ -62,6 +62,22 @@ export class ClienteService {
     this.clientes = await this.getData('clientes') || [];
   }
 
+  async eliminarCliente(id: number) {
+    // 1. Eliminar pagos asociados al cliente
+    this.pagos = this.pagos.filter(p => p.idCliente !== id);
+    await this.saveData('pagos', this.pagos);
+
+    // 2. Eliminar adeudos asociados al cliente
+    this.adeudos = this.adeudos.filter(a => a.idCliente !== id);
+    await this.saveData('adeudos', this.adeudos);
+
+    // 3. Eliminar al cliente
+    this.clientes = this.clientes.filter(c => c.id !== id);
+    await this.saveData('clientes', this.clientes);
+
+    this.uiService.presentToast('Cliente y sus datos eliminados');
+  }
+
   // --- ADEUDOS ---
 
   async guardarAdeudo(adeudo: Adeudo) {
