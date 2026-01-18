@@ -22,6 +22,7 @@
     "@capacitor/app": "^6.0.0",
     "@capacitor/core": "^6.0.0",
     "@capacitor/haptics": "^6.0.0",
+    "@capacitor/ios": "^6.2.1",
     "@capacitor/keyboard": "^6.0.0",
     "@capacitor/status-bar": "^6.0.0",
     "@ionic/angular": "^8.0.0",
@@ -42,6 +43,7 @@
     "@angular/compiler": "^18.0.0",
     "@angular/compiler-cli": "^18.0.0",
     "@angular/language-service": "^18.0.0",
+    "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^6.0.0",
     "@ionic/angular-toolkit": "^10.0.0",
     "@types/jasmine": "~5.1.0",
@@ -61,5 +63,5 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.4.0"
   },
-  "description": "An Ionic project"
+  "description": "La aplicación Mis Clientes Deudores se realizó para tener un registro de pagos de los clientes y conocer cuánto quedan a deber, así también poder llevar la información a todos lados contigo."
 }
