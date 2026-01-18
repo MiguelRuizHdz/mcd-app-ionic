@@ -42,6 +42,16 @@
         <h5 class="success">Al corriente</h5>
       </ion-label>
     </ion-item>
+
+    <ion-item button detail *ngFor="let cliente of clienteService.clientes">
+      <ion-avatar slot="start">
+        <img src="./assets/avatars/FotoCamara.png" />
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ cliente.nombre }} {{ cliente.apellido }}</h2>
+        <h5 class="primary">Cliente agregado</h5>
+      </ion-label>
+    </ion-item>
   </ion-list>
 
 
