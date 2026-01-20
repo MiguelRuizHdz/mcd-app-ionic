@@ -19,7 +19,7 @@ export class AgregarClientePage implements OnInit {
     apellido: '',
     correo: '',
     direccion: '',
-    telefono: 0,
+    telefono: undefined,
     foto: '',
   };
 

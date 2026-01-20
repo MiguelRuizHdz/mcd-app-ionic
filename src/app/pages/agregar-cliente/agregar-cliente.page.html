@@ -31,11 +31,11 @@
     <ion-item>
       <ion-label position="fixed">Nombre</ion-label>
       <ion-input name="nombre" type="text" [(ngModel)]="nuevoCliente.nombre" pattern="([A-Za-zñÑáéíóúÁÉÍÓÚ\s]{2,35})"
-        required="required"></ion-input>
+        required="required" autocapitalize="words"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="fixed">Apellidos</ion-label>
-      <ion-input name="apellido" type="text" [(ngModel)]="nuevoCliente.apellido"></ion-input>
+      <ion-input name="apellido" type="text" [(ngModel)]="nuevoCliente.apellido" autocapitalize="words"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="fixed">Número</ion-label>

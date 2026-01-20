@@ -24,11 +24,11 @@
     <ion-item lines="inset">
       <ion-label position="fixed">Nombre</ion-label>
       <ion-input name="nombre" type="text" [(ngModel)]="cliente.nombre" required
-        pattern="([A-Za-zñÑáéíóúÁÉÍÓÚ\s]{2,25})"></ion-input>
+        pattern="([A-Za-zñÑáéíóúÁÉÍÓÚ\s]{2,25})" autocapitalize="words"></ion-input>
     </ion-item>
     <ion-item lines="inset">
       <ion-label position="fixed">Apellidos</ion-label>
-      <ion-input name="apellido" type="text" [(ngModel)]="cliente.apellido"></ion-input>
+      <ion-input name="apellido" type="text" [(ngModel)]="cliente.apellido" autocapitalize="words"></ion-input>
     </ion-item>
     <ion-item lines="inset">
       <ion-label position="fixed">Número</ion-label>
