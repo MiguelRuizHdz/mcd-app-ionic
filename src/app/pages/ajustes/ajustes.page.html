@@ -1,0 +1,42 @@
+<ion-header mode="ios">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/tabs/clientes"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Ajustes de Base de Datos</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+    <div class="ion-text-center ion-padding-bottom">
+        <ion-icon name="server-outline" style="font-size: 64px; color: var(--ion-color-primary);"></ion-icon>
+        <h3>Gestión de Datos</h3>
+        <p>Administra la información de tus clientes, adeudos y pagos.</p>
+    </div>
+
+    <ion-list mode="ios" lines="inset">
+        <ion-item button (click)="exportarDB()">
+            <ion-icon slot="start" name="download-outline" color="primary"></ion-icon>
+            <ion-label>
+                <h2>Exportar Copia de Seguridad</h2>
+                <p>Guarda todos los datos en un archivo .mcdb</p>
+            </ion-label>
+        </ion-item>
+
+        <ion-item button (click)="confirmarImportar()">
+            <ion-icon slot="start" name="cloud-upload-outline" color="warning"></ion-icon>
+            <ion-label>
+                <h2>Importar Copia de Seguridad</h2>
+                <p>Restaura datos desde un archivo .mcdb</p>
+            </ion-label>
+        </ion-item>
+    </ion-list>
+
+    <div class="ion-padding ion-text-center">
+        <small style="color: grey;">
+            Copia de seguridad local. No olvides guardar tus archivos en un lugar seguro.
+        </small>
+    </div>
+
+</ion-content>

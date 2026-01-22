@@ -29,6 +29,10 @@ const routes: Routes = [
   {
     path: 'lista-adeudos/:idCliente',
     loadChildren: () => import('./pages/lista-adeudos/lista-adeudos.module').then(m => m.ListaAdeudosPageModule)
+  },
+  {
+    path: 'ajustes',
+    loadChildren: () => import('./pages/ajustes/ajustes.module').then(m => m.AjustesPageModule)
   }
 ];
 @NgModule({

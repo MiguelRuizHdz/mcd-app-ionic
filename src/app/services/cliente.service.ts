@@ -197,4 +197,54 @@ export class ClienteService {
     );
     return this.busquedaClientes;
   }
+
+  // --- IMPORT / EXPORT ---
+
+  exportarDatos() {
+    const data = {
+      clientes: this.clientes,
+      adeudos: this.adeudos,
+      pagos: this.pagos,
+      idClienteContador: this.idClienteContador,
+      idAdeudoContador: this.idAdeudoContador,
+      idPagoContador: this.idPagoContador,
+      version: '1.0',
+      fechaExportacion: new Date().toISOString()
+    };
+    return JSON.stringify(data, null, 2);
+  }
+
+  async importarDatos(jsonString: string) {
+    try {
+      const data = JSON.parse(jsonString);
+
+      // Validación básica
+      if (!data.clientes || !data.adeudos || !data.pagos) {
+        throw new Error('Formato de archivo no válido');
+      }
+
+      // Actualizar estado interno
+      this.clientes = data.clientes;
+      this.adeudos = data.adeudos;
+      this.pagos = data.pagos;
+      this.idClienteContador = data.idClienteContador || 0;
+      this.idAdeudoContador = data.idAdeudoContador || 0;
+      this.idPagoContador = data.idPagoContador || 0;
+
+      // Guardar todo en storage
+      await this.saveData('clientes', this.clientes);
+      await this.saveData('adeudos', this.adeudos);
+      await this.saveData('pagos', this.pagos);
+      await this.saveData('idClienteContador', this.idClienteContador);
+      await this.saveData('idAdeudoContador', this.idAdeudoContador);
+      await this.saveData('idPagoContador', this.idPagoContador);
+
+      this.uiService.presentToast('Datos importados con éxito');
+      return true;
+    } catch (e) {
+      console.error('Error al importar:', e);
+      this.uiService.presentToast('Error al importar el archivo');
+      return false;
+    }
+  }
 }
