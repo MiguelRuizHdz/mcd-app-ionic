@@ -34,6 +34,10 @@ export class EditarClientePage implements OnInit {
       const resp = this.clienteService.getClienteById(parseInt(id));
       if (resp) {
         this.cliente = { ...resp };
+        if (this.cliente.telefono) {
+          const telStr = String(this.cliente.telefono).replace(/\s+/g, '');
+          this.cliente.telefono = telStr ? Number(telStr) : undefined;
+        }
       }
     }
   }
@@ -56,6 +60,10 @@ export class EditarClientePage implements OnInit {
 
   guardarCliente(fEditarCliente: NgForm) {
     if (fEditarCliente.invalid) return;
+    if (this.cliente.telefono) {
+      const telStr = String(this.cliente.telefono).replace(/\s+/g, '');
+      this.cliente.telefono = telStr ? Number(telStr) : undefined;
+    }
     this.clienteService.guardarCliente(this.cliente);
     this.navCtrl.back();
   }

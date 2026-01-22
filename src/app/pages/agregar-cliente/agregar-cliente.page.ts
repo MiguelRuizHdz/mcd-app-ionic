@@ -47,11 +47,14 @@ export class AgregarClientePage implements OnInit {
   }
 
   guardarCliente(fNuevoCliente: NgForm) {
-
-
     if (fNuevoCliente.invalid) {
       this.uiService.presentToast('Llene los campos correctamente');
       return;
+    }
+
+    if (this.nuevoCliente.telefono) {
+      const telStr = String(this.nuevoCliente.telefono).replace(/\s+/g, '');
+      this.nuevoCliente.telefono = telStr ? Number(telStr) : undefined;
     }
 
     this.clienteService.guardarCliente(this.nuevoCliente);
