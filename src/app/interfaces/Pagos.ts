@@ -5,4 +5,6 @@ export interface Pago {
     fechaPago: string;
     concepto?: string;
     monto?: number;
+    folio?: string;
+    comprobante?: string;
 }

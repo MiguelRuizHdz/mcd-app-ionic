@@ -4,6 +4,7 @@ import { NavController, AlertController } from '@ionic/angular';
 import { Adeudo } from '../../interfaces/Adeudos';
 import { ClienteService } from '../../services/cliente.service';
 import { Pago } from '../../interfaces/Pagos';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 @Component({
   selector: 'app-detalle-adeudo',
@@ -35,57 +36,69 @@ export class DetalleAdeudoPage implements OnInit {
     }
   }
 
-  async pagarTotal() {
+  async registrarPago() {
     if (!this.adeudo) return;
-    this.realizarCobro(this.adeudo.aDeber || 0);
+    this.navCtrl.navigateForward(`/cobro/${this.adeudo.id}`);
   }
 
-  async pagarParcial() {
+  async confirmarEliminarAdeudo() {
+    if (!this.adeudo) return;
     const alert = await this.alertCtrl.create({
-      header: 'Pago Parcial',
-      inputs: [
-        {
-          name: 'monto',
-          type: 'number',
-          placeholder: '¿Cuánto pagará?',
-          min: 1,
-          max: this.adeudo?.aDeber
-        }
-      ],
+      header: 'Eliminar Adeudo',
+      message: '¿Estás seguro de eliminar este adeudo? Se eliminarán también todos sus pagos asociados.',
       buttons: [
         { text: 'Cancelar', role: 'cancel' },
         {
-          text: 'Pagar',
-          handler: (data) => {
-            if (data.monto > 0) {
-              this.realizarCobro(parseFloat(data.monto));
-            }
+          text: 'Eliminar',
+          role: 'destructive',
+          handler: () => {
+            this.clienteService.eliminarAdeudo(this.adeudo!.id);
+            this.navCtrl.back();
           }
         }
       ]
     });
-
     await alert.present();
   }
 
-  private async realizarCobro(monto: number) {
-    if (!this.adeudo) return;
+  async confirmarEliminarPago(idPago: number) {
+    const alert = await this.alertCtrl.create({
+      header: 'Eliminar Pago',
+      message: '¿Estás seguro de eliminar este pago? El saldo pendiente aumentará.',
+      buttons: [
+        { text: 'Cancelar', role: 'cancel' },
+        {
+          text: 'Eliminar',
+          role: 'destructive',
+          handler: async () => {
+            await this.clienteService.eliminarPago(idPago);
+            this.cargarDatos();
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
 
-    const nuevoPago: Pago = {
-      id: 0,
-      idCliente: this.adeudo.idCliente,
-      idAdeudo: this.adeudo.id,
-      fechaPago: '',
-      concepto: `Pago a: ${this.adeudo.concepto}`,
-      monto: monto
-    };
+  async adjuntarFotoExistente(pago: Pago) {
+    try {
+      const image = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.Base64,
+        source: CameraSource.Prompt,
+        promptLabelHeader: 'Actualizar Comprobante',
+        promptLabelPhoto: 'De la galería',
+        promptLabelPicture: 'Tomar foto'
+      });
 
-    await this.clienteService.registrarPago(nuevoPago);
-    this.cargarDatos();
-
-    // Si ya se liquidó, regresamos después de mostrar el cambio
-    if (this.adeudo.aDeber === 0) {
-      setTimeout(() => this.navCtrl.back(), 1500);
+      if (image.base64String) {
+        pago.comprobante = `data:image/${image.format};base64,${image.base64String}`;
+        await this.clienteService.actualizarPago(pago);
+        this.cargarDatos();
+      }
+    } catch (e) {
+      console.log('Cancelado');
     }
   }
 

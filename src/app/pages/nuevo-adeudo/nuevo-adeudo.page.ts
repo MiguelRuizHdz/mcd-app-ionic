@@ -11,14 +11,14 @@ import { ClienteService } from '../../services/cliente.service';
 })
 export class NuevoAdeudoPage implements OnInit {
 
-  adeudo: Adeudo = {
+  adeudo: any = {
     id: -1,
     idCliente: 0,
     fechaCreacion: '',
     concepto: '',
-    precio: 0,
+    precio: undefined,
     fechaPagarAntesDe: new Date().toISOString(),
-    aDeber: 0
+    aDeber: undefined
   };
 
   constructor(private activatedRoute: ActivatedRoute,

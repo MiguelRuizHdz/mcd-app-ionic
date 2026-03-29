@@ -164,6 +164,48 @@ export class ClienteService {
     return this.pagos.filter(p => p.idCliente === idCliente);
   }
 
+  // --- ADEUDOS ---
+
+  async eliminarAdeudo(id: number) {
+    // 1. Eliminar pagos asociados
+    this.pagos = this.pagos.filter(p => p.idAdeudo !== id);
+    await this.saveData('pagos', this.pagos);
+
+    // 2. Eliminar el adeudo
+    this.adeudos = this.adeudos.filter(a => a.id !== id);
+    await this.saveData('adeudos', this.adeudos);
+
+    this.uiService.presentToast('Adeudo y sus pagos eliminados');
+  }
+
+  // --- PAGOS ---
+
+  async eliminarPago(idPago: number) {
+    const pago = this.pagos.find(p => p.id === idPago);
+    if (!pago) return;
+
+    // 1. Restaurar el saldo en el adeudo
+    const adeudo = this.adeudos.find(a => a.id === pago.idAdeudo);
+    if (adeudo) {
+      adeudo.aDeber = (adeudo.aDeber || 0) + (pago.monto || 0);
+      await this.saveData('adeudos', this.adeudos);
+    }
+
+    // 2. Eliminar el pago
+    this.pagos = this.pagos.filter(p => p.id !== idPago);
+    await this.saveData('pagos', this.pagos);
+
+    this.uiService.presentToast('Pago eliminado y saldo restaurado');
+  }
+
+  async actualizarPago(pagoActualizado: Pago) {
+    const index = this.pagos.findIndex(p => p.id === pagoActualizado.id);
+    if (index !== -1) {
+      this.pagos[index] = pagoActualizado;
+      await this.saveData('pagos', this.pagos);
+    }
+  }
+
   // --- HELPERS ---
 
   private async saveData(key: string, value: any) {

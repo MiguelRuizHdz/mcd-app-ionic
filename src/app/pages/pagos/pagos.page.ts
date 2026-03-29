@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ClienteService } from '../../services/cliente.service';
 import { Pago } from '../../interfaces/Pagos';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-pagos',
@@ -11,7 +12,8 @@ export class PagosPage implements OnInit {
 
   pagosAgrupados: { fecha: string, pagos: any[] }[] = [];
 
-  constructor(public clienteService: ClienteService) { }
+  constructor(public clienteService: ClienteService,
+    private alertCtrl: AlertController) { }
 
   ngOnInit() {
   }
@@ -41,6 +43,25 @@ export class PagosPage implements OnInit {
       fecha,
       pagos: grupos[fecha]
     })).sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+  }
+
+  async confirmarEliminarPago(idPago: number) {
+    const alert = await this.alertCtrl.create({
+      header: 'Eliminar Pago',
+      message: '¿Estás seguro de eliminar este pago? El saldo pendiente de la deuda aumentará.',
+      buttons: [
+        { text: 'Cancelar', role: 'cancel' },
+        {
+          text: 'Eliminar',
+          role: 'destructive',
+          handler: async () => {
+            await this.clienteService.eliminarPago(idPago);
+            this.agruparPagos();
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
 }

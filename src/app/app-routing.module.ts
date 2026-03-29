@@ -33,6 +33,10 @@ const routes: Routes = [
   {
     path: 'ajustes',
     loadChildren: () => import('./pages/ajustes/ajustes.module').then(m => m.AjustesPageModule)
+  },
+  {
+    path: 'cobro/:idAdeudo',
+    loadChildren: () => import('./pages/cobro/cobro.module').then(m => m.CobroPageModule)
   }
 ];
 @NgModule({

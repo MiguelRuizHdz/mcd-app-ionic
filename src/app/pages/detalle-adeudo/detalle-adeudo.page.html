@@ -3,6 +3,11 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button color="danger" (click)="confirmarEliminarAdeudo()">
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>Detalle de Adeudo</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -34,12 +39,8 @@
   </ion-list>
 
   <div class="actions ion-padding" *ngIf="adeudo?.aDeber! > 0">
-    <ion-button expand="block" shape="round" color="success" (click)="pagarTotal()">
-      Pagar Total
-    </ion-button>
-    <ion-button expand="block" fill="outline" shape="round" color="primary" class="ion-margin-top"
-      (click)="pagarParcial()">
-      Pago Parcial
+    <ion-button expand="block" shape="round" color="success" (click)="registrarPago()">
+      Registrar Pago
     </ion-button>
   </div>
 
@@ -57,15 +58,30 @@
     </ion-list-header>
 
     <ion-list mode="ios" class="inset-list no-margin-top">
-      <ion-item *ngFor="let pago of pagos" lines="full">
-        <ion-label>
-          <h2>Abono</h2>
-          <p>{{ pago.fechaPago | date:'dd/MM/yyyy HH:mm' }}</p>
-        </ion-label>
-        <ion-note slot="end" color="success" style="font-weight: 600;">
-          + {{ pago.monto | currency }}
-        </ion-note>
-      </ion-item>
+      <ion-item-sliding *ngFor="let pago of pagos">
+        <ion-item lines="full">
+          <ion-avatar slot="start" *ngIf="pago.comprobante">
+            <img [src]="pago.comprobante" />
+          </ion-avatar>
+          <ion-icon slot="start" name="image-outline" *ngIf="!pago.comprobante" color="medium"></ion-icon>
+          <ion-label>
+            <h2>Abono <span *ngIf="pago.folio" class="folio-text">- Folio: {{ pago.folio }}</span></h2>
+            <p>{{ pago.fechaPago | date:'dd/MM/yyyy HH:mm' }}</p>
+          </ion-label>
+          <ion-note slot="end" color="success" style="font-weight: 600;">
+            + {{ pago.monto | currency }}
+          </ion-note>
+        </ion-item>
+
+        <ion-item-options side="end">
+          <ion-item-option (click)="adjuntarFotoExistente(pago)">
+            <ion-icon slot="icon-only" name="camera"></ion-icon>
+          </ion-item-option>
+          <ion-item-option color="danger" (click)="confirmarEliminarPago(pago.id)">
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
 
       <ion-item *ngIf="pagos.length === 0" lines="none">
         <ion-label color="medium" class="ion-text-center">

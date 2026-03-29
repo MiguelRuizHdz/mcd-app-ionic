@@ -1,0 +1,38 @@
+.header-cobro {
+    background-color: var(--ion-color-light);
+    border-bottom: 1px solid var(--ion-color-step-150);
+
+    h2 {
+        font-weight: 700;
+        color: var(--ion-color-dark);
+    }
+}
+
+.foto-comprobante-container {
+    border: 2px dashed var(--ion-color-step-300);
+    border-radius: 12px;
+    padding: 20px;
+    background-color: var(--ion-color-step-50);
+    cursor: pointer;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .placeholder-foto {
+        color: var(--ion-color-step-500);
+
+        ion-icon {
+            font-size: 48px;
+        }
+    }
+
+    .foto-comprobante {
+        max-height: 300px;
+        width: 100%;
+        object-fit: contain;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+}
