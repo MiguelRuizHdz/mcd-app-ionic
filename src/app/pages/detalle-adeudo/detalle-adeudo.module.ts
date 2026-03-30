@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { DetalleAdeudoPageRoutingModule } from './detalle-adeudo-routing.module';
 
 import { DetalleAdeudoPage } from './detalle-adeudo.page';
+import { ComponentsModule } from '../../components/components.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    DetalleAdeudoPageRoutingModule
+    DetalleAdeudoPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [DetalleAdeudoPage]
 })

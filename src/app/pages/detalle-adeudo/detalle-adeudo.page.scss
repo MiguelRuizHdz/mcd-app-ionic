@@ -1,27 +1,89 @@
 .header-adeudo {
-    background: var(--ion-color-light);
-    border-bottom: 0.5px solid var(--ion-color-light-shade);
-    padding-top: 40px;
-    padding-bottom: 30px;
-
+    background: var(--ion-background-color);
     h1 {
-        font-weight: 700;
-        font-size: 1.8rem;
-    }
-
-    .saldo-deber {
-        font-size: 3rem;
         font-weight: 800;
+        letter-spacing: -0.5px;
+    }
+    .saldo-deber {
+        font-size: 2.5rem;
+        font-weight: 900;
         margin: 10px 0;
     }
 }
 
 .inset-list {
-    margin: 20px;
+    margin: 16px;
     border-radius: 12px;
     overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.no-margin-top {
+    margin-top: 0 !important;
+}
+
+.folio-text {
+    font-size: 0.8em;
+    font-weight: normal;
+    background: var(--ion-color-light);
+    padding: 2px 6px;
+    border-radius: 4px;
 }
 
 .color-medium {
     color: var(--ion-color-medium);
+}
+
+// Estilos para el visor y el avatar
+.clickable-avatar {
+    cursor: pointer;
+    position: relative;
+    border: 2px solid var(--ion-color-light);
+    transition: transform 0.2s;
+    
+    &:active {
+        transform: scale(0.9);
+    }
+
+    .expand-indicator {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background: rgba(0,0,0,0.5);
+        color: white;
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+    }
+}
+
+.visor-modal {
+    --height: 100%;
+    --width: 100%;
+    --border-radius: 0;
+    
+    .image-viewer-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: black;
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+    }
+}
+
+// Estilo del ticket invisible (ya movido a global pero por si acaso)
+.ticket-offscreen {
+    position: absolute;
+    left: -9999px;
 }

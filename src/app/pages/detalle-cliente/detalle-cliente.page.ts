@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
 import { ClienteService } from '../../services/cliente.service';
+import { WhatsappService } from 'src/app/services/whatsapp.service';
 import { Cliente } from '../../interfaces/Clientes';
 import { Adeudo } from '../../interfaces/Adeudos';
 import { Pago } from '../../interfaces/Pagos';
@@ -19,6 +20,7 @@ export class DetalleClientePage implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
     private clienteService: ClienteService,
+    private whatsappService: WhatsappService,
     private router: Router,
     private alertCtrl: AlertController,
     private navCtrl: NavController) { }
@@ -98,9 +100,9 @@ export class DetalleClientePage implements OnInit {
   }
 
   whatsapp() {
-    if (this.cliente?.telefono) {
-      const url = `https://api.whatsapp.com/send?phone=${this.cliente.telefono}&text=${encodeURIComponent('Hola!')}`;
-      window.open(url, '_system');
+    if (this.cliente) {
+      const msj = this.whatsappService.generarMensajeEstadoGeneral(this.cliente, this.totalAdeudo);
+      this.whatsappService.enviarMensajeTexto(this.cliente, msj);
     }
   }
 

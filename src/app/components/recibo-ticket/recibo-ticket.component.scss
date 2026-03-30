@@ -1,0 +1,119 @@
+.ticket-container {
+  width: 100%;
+  max-width: 400px; /* Tamaño típico de ticket */
+  margin: 0 auto;
+  background-color: #ffffff;
+  color: #000000;
+  padding: 20px;
+  font-family: 'Courier New', Courier, monospace;
+  box-sizing: border-box;
+}
+
+.ticket-wrapper {
+  background: white;
+  padding: 10px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+  
+  .business-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 5px 0;
+    letter-spacing: 2px;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+    margin: 5px 0;
+    text-transform: uppercase;
+  }
+}
+
+.divider-dashed {
+  border-top: 2px dashed #000000;
+  margin: 15px 0;
+  width: 100%;
+}
+
+.content {
+  .item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 13px;
+    
+    .label {
+      font-weight: bold;
+    }
+  }
+  
+  .detail-row {
+    margin-bottom: 10px;
+    
+    .label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 3px;
+    }
+    
+    .value-block {
+      display: block;
+      padding-left: 10px;
+      line-height: 1.4;
+    }
+  }
+}
+
+.totals {
+  .total-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    align-items: center;
+    
+    .label {
+      font-weight: bold;
+      font-size: 14px;
+    }
+    
+    &.large {
+      padding: 10px 0;
+      
+      .label {
+        font-size: 16px;
+      }
+      
+      .value {
+        font-size: 18px;
+        font-weight: 800;
+      }
+    }
+  }
+}
+
+.footer {
+  text-align: center;
+  margin-top: 30px;
+  
+  .thanks {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .disclaimer {
+    font-size: 11px;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+  
+  .barcode {
+    font-size: 14px;
+    letter-spacing: 4px;
+    font-weight: bold;
+    transform: scaleX(1.5);
+  }
+}

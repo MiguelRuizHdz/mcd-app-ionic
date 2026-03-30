@@ -5,6 +5,8 @@ import { Adeudo } from '../../interfaces/Adeudos';
 import { ClienteService } from '../../services/cliente.service';
 import { Pago } from '../../interfaces/Pagos';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { WhatsappService } from 'src/app/services/whatsapp.service';
+import { Cliente } from 'src/app/interfaces/Clientes';
 
 @Component({
   selector: 'app-detalle-adeudo',
@@ -14,10 +16,16 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 export class DetalleAdeudoPage implements OnInit {
 
   adeudo: Adeudo | undefined;
+  cliente: Cliente | undefined;
   pagos: Pago[] = [];
+
+  // Estado para el visor de imágenes
+  verImagenModal: boolean = false;
+  urlImagenVer: string = "";
 
   constructor(private activatedRoute: ActivatedRoute,
     private clienteService: ClienteService,
+    private whatsappService: WhatsappService,
     private navCtrl: NavController,
     private alertCtrl: AlertController) { }
 
@@ -33,6 +41,23 @@ export class DetalleAdeudoPage implements OnInit {
     if (id) {
       this.adeudo = this.clienteService.getAdeudoById(parseInt(id));
       this.pagos = this.clienteService.getPagosByAdeudo(parseInt(id));
+      
+      if (this.adeudo) {
+         this.cliente = this.clienteService.getClienteById(this.adeudo.idCliente);
+      }
+    }
+  }
+
+  compartirWhatsApp() {
+    if (this.cliente && this.adeudo) {
+      const msj = this.whatsappService.generarMensajeCobro(this.cliente, this.adeudo);
+      this.whatsappService.enviarMensajeTexto(this.cliente, msj);
+    }
+  }
+
+  async compartirTicket() {
+    if (this.cliente && this.adeudo) {
+      await this.whatsappService.compartirReciboImagen('ticket-capture', this.cliente, `Recibo_${this.cliente.nombre}.png`);
     }
   }
 
@@ -100,6 +125,16 @@ export class DetalleAdeudoPage implements OnInit {
     } catch (e) {
       console.log('Cancelado');
     }
+  }
+
+  abrirVisor(url: string) {
+    this.urlImagenVer = url;
+    this.verImagenModal = true;
+  }
+
+  cerrarVisor() {
+    this.verImagenModal = false;
+    this.urlImagenVer = "";
   }
 
 }

@@ -74,6 +74,14 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  /** whatsapp **/
+  --ion-color-whatsapp: #25D366;
+  --ion-color-whatsapp-rgb: 37, 211, 102;
+  --ion-color-whatsapp-contrast: #ffffff;
+  --ion-color-whatsapp-contrast-rgb: 255, 255, 255;
+  --ion-color-whatsapp-shade: #21ba5a;
+  --ion-color-whatsapp-tint: #3be075;
 }
 
 @media (prefers-color-scheme: dark) {

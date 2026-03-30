@@ -41,3 +41,11 @@ div.searchbar-input-container.sc-ion-searchbar-ios {
 .text-danger {
     color: #dc3545!important
 }
+
+.ticket-offscreen {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    width: 400px;
+    background: white;
+}

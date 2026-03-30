@@ -54,10 +54,17 @@
         <h2>Total Pendiente</h2>
         <h3 class="debt-amount">{{ totalAdeudo | currency }}</h3>
       </ion-label>
-      <ion-button slot="end" size="small" (click)="nuevoAdeudo()">
-        <ion-icon name="add" slot="start"></ion-icon>
-        Nuevo
-      </ion-button>
+      <div slot="end">
+        <ion-button size="small" (click)="nuevoAdeudo()" color="primary" class="ion-margin-bottom">
+          <ion-icon name="add" slot="start"></ion-icon>
+          Nuevo
+        </ion-button>
+        <br>
+        <ion-button size="small" (click)="whatsapp()" color="whatsapp">
+          <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
+          Enviar Estado
+        </ion-button>
+      </div>
     </ion-item>
 
     <ion-item button detail (click)="verListaCompleta()" lines="none" class="ion-margin-top">

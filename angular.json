@@ -1,7 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "defaultProject": "app",
   "newProjectRoot": "projects",
   "projects": {
     "app": {
@@ -48,7 +47,9 @@
             "optimization": false,
             "namedChunks": true,
             "allowedCommonJsDependencies": [
-              "localforage"
+              "localforage",
+              "html2canvas",
+              "dom-to-image-more"
             ]
           },
           "configurations": {
@@ -76,7 +77,6 @@
               ]
             },
             "ci": {
-              "progress": false
             }
           }
         },
@@ -90,7 +90,6 @@
               "buildTarget": "app:build:production"
             },
             "ci": {
-              "progress": false
             }
           }
         },
@@ -124,7 +123,6 @@
           },
           "configurations": {
             "ci": {
-              "progress": false,
               "watch": false
             }
           }

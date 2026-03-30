@@ -1,0 +1,58 @@
+<div class="ticket-container" id="ticket-capture">
+  <div class="ticket-wrapper">
+    <!-- Header -->
+    <div class="header">
+      <h1 class="business-name">MCD APP</h1>
+      <p class="subtitle">Comprobante de Adeudo</p>
+      <div class="divider-dashed"></div>
+    </div>
+
+    <!-- Body -->
+    <div class="content">
+      <div class="item">
+        <span class="label">FECHA:</span>
+        <span class="value">{{ fechaActual | date:'dd/MM/yyyy HH:mm' }}</span>
+      </div>
+      <div class="item">
+        <span class="label">CLIENTE:</span>
+        <span class="value">{{ cliente?.nombre }} {{ cliente?.apellido }}</span>
+      </div>
+      
+      <div class="divider-dashed"></div>
+
+      <div class="details">
+        <div class="detail-row">
+          <span class="label">CONCEPTO:</span>
+          <span class="value-block">{{ adeudo?.concepto || 'Sin concepto' }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">REGISTRADO:</span>
+          <span class="value">{{ adeudo?.fechaCreacion | date:'dd/MM/yyyy' }}</span>
+        </div>
+      </div>
+
+      <div class="divider-dashed"></div>
+
+      <!-- Financials -->
+      <div class="totals">
+        <div class="total-row large">
+          <span class="label">SALDO PENDIENTE:</span>
+          <span class="value highlight">$ {{ adeudo?.aDeber || 0 | number:'1.2-2' }}</span>
+        </div>
+        <div class="total-row" *ngIf="adeudo?.fechaPagarAntesDe">
+          <span class="label">LÍMITE DE PAGO:</span>
+          <span class="value">{{ adeudo?.fechaPagarAntesDe | date:'dd/MM/yyyy' }}</span>
+        </div>
+      </div>
+
+      <div class="divider-dashed"></div>
+
+      <!-- Footer -->
+      <div class="footer">
+        <p class="thanks">¡GRACIAS POR SU PAGO!</p>
+        <p class="disclaimer">Documento informativo sin validez fiscal.</p>
+        <div class="barcode">|| ||| || |||| || |||</div>
+      </div>
+    </div>
+  </div>
+</div>
