@@ -37,6 +37,10 @@ const routes: Routes = [
   {
     path: 'cobro/:idAdeudo',
     loadChildren: () => import('./pages/cobro/cobro.module').then(m => m.CobroPageModule)
+  },
+  {
+    path: 'dashboard',
+    loadChildren: () => import('./pages/dashboard/dashboard.module').then( m => m.DashboardPageModule)
   }
 ];
 @NgModule({

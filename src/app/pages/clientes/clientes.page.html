@@ -1,35 +1,50 @@
 <ion-header mode="ios">
   <ion-toolbar>
+    <ion-title>Clientes</ion-title>
     <ion-buttons slot="end">
       <ion-button routerLink="/ajustes">
         <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title class="">
-      Clientes
-    </ion-title>
   </ion-toolbar>
+
+  <!-- Search and Filters integrated more natively -->
+  <ion-toolbar mode="ios">
+    <ion-searchbar 
+      mode="ios" 
+      placeholder="Buscar cliente..." 
+      (ionInput)="buscar($event)" 
+      [value]="textoBuscar"
+      class="compact-searchbar">
+    </ion-searchbar>
+  </ion-toolbar>
+
+  <div class="filter-row">
+    <ion-chip [color]="filtroEstado === 'todos' ? 'primary' : 'medium'" (click)="cambiarFiltro('todos')" mode="ios" [outline]="filtroEstado !== 'todos'">
+      <ion-label>Todos</ion-label>
+    </ion-chip>
+    <ion-chip [color]="filtroEstado === 'deudores' ? 'danger' : 'medium'" (click)="cambiarFiltro('deudores')" mode="ios" [outline]="filtroEstado !== 'deudores'">
+      <ion-label>Deudores</ion-label>
+    </ion-chip>
+    <ion-chip [color]="filtroEstado === 'al-corriente' ? 'success' : 'medium'" (click)="cambiarFiltro('al-corriente')" mode="ios" [outline]="filtroEstado !== 'al-corriente'">
+      <ion-label>Al Corriente</ion-label>
+    </ion-chip>
+  </div>
 </ion-header>
 
 <ion-content>
-
-  <!-- Searchbar with cancel button never shown -->
-  <ion-searchbar mode="ios" placeholder="Buscar" showCancelButton="never"></ion-searchbar>
-
-
-  <!-- List of Text Items -->
-  <ion-list mode="ios">
-
-    <ion-item-sliding *ngFor="let cliente of clienteService.clientes">
+  <!-- Classical Ionic List Style -->
+  <ion-list mode="ios" class="standard-list">
+    <ion-item-sliding *ngFor="let cliente of clientesFiltrados">
       <ion-item button detail (click)="verDetalle(cliente)">
         <ion-avatar slot="start">
           <img [src]="cliente.foto ? cliente.foto : './assets/avatars/FotoCamara.png'" />
         </ion-avatar>
         <ion-label>
           <h2>{{ cliente.nombre }} {{ cliente.apellido }}</h2>
-          <h5 [class]="clienteService.getEstadoCliente(cliente.id).clase">
+          <p [class]="'text-' + clienteService.getEstadoCliente(cliente.id).clase">
             {{ clienteService.getEstadoCliente(cliente.id).texto }}
-          </h5>
+          </p>
         </ion-label>
       </ion-item>
 
@@ -41,12 +56,14 @@
     </ion-item-sliding>
   </ion-list>
 
+  <!-- Empty state simplified -->
+  <div class="empty-state ion-padding ion-text-center" *ngIf="clientesFiltrados.length === 0">
+    <p color="medium">No hay clientes con este filtro</p>
+  </div>
 
-  <!-- fab placed to the top end -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="agregarCliente()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-
 </ion-content>

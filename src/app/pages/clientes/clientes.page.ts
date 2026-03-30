@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { ClienteService } from '../../services/cliente.service';
@@ -9,11 +9,60 @@ import { Cliente } from '../../interfaces/Clientes';
   templateUrl: 'clientes.page.html',
   styleUrls: ['clientes.page.scss']
 })
-export class ClientesPage {
+export class ClientesPage implements OnInit {
+
+  clientesFiltrados: Cliente[] = [];
+  textoBuscar = '';
+  filtroEstado = 'todos'; // todos, deudores, al-corriente
 
   constructor(private router: Router,
     private alertCtrl: AlertController,
     public clienteService: ClienteService) { }
+
+  ngOnInit() {}
+
+  ionViewWillEnter() {
+    this.aplicarFiltros();
+  }
+
+  buscar(event: any) {
+    this.textoBuscar = event.detail.value;
+    this.aplicarFiltros();
+  }
+
+  cambiarFiltro(estado: string) {
+    this.filtroEstado = estado;
+    this.aplicarFiltros();
+  }
+
+  aplicarFiltros() {
+    // 1. Empezar con todos los clientes
+    let filtrados = [...this.clienteService.clientes];
+
+    // 2. Filtrar por texto si existe
+    if (this.textoBuscar.trim().length > 0) {
+      const termino = this.textoBuscar.toLowerCase();
+      filtrados = filtrados.filter(c => 
+        c.nombre.toLowerCase().includes(termino) || 
+        c.apellido?.toLowerCase().includes(termino)
+      );
+    }
+
+    // 3. Filtrar por estado
+    if (this.filtroEstado === 'deudores') {
+      filtrados = filtrados.filter(c => {
+        const estado = this.clienteService.getEstadoCliente(c.id);
+        return estado.clase === 'danger' || estado.clase === 'warning';
+      });
+    } else if (this.filtroEstado === 'al-corriente') {
+      filtrados = filtrados.filter(c => {
+        const estado = this.clienteService.getEstadoCliente(c.id);
+        return estado.clase === 'success';
+      });
+    }
+
+    this.clientesFiltrados = filtrados;
+  }
 
   agregarCliente() {
     this.router.navigate(['agregar-cliente']);
@@ -33,8 +82,9 @@ export class ClientesPage {
         {
           text: 'Eliminar',
           role: 'destructive',
-          handler: () => {
-            this.clienteService.eliminarCliente(cliente.id);
+          handler: async () => {
+            await this.clienteService.eliminarCliente(cliente.id);
+            this.aplicarFiltros(); // Actualizar lista local
           }
         }
       ]

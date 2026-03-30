@@ -1,0 +1,75 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Resumen de Cartera</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/ajustes">
+        <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Dashboard Stats -->
+  <div class="dashboard-header ion-padding">
+    <div class="metrics-grid">
+      <div class="metric-card gold">
+        <p>Saldo Total Pendiente</p>
+        <h2 class="ion-no-margin">{{ totalDeuda | currency }}</h2>
+        <div class="card-extra">
+          <ion-icon name="trending-down-outline"></ion-icon>
+          <span>{{ adeudosPendientesCount }} adeudos activos</span>
+        </div>
+      </div>
+
+      <div class="metric-card blue">
+        <p>Total Clientes</p>
+        <h2 class="ion-no-margin">{{ totalClientes }}</h2>
+        <div class="card-extra">
+          <ion-icon name="people-outline"></ion-icon>
+          <span>Cartera total</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Collection Progress -->
+    <div class="progress-section ion-margin-top ion-padding">
+      <div class="progress-label">
+        <ion-label>Recuperación de Cobros</ion-label>
+        <ion-note slot="end">{{ (porcentajeRecuperado * 100) | number:'1.0-0' }}%</ion-note>
+      </div>
+      <ion-progress-bar [value]="porcentajeRecuperado" color="success" class="custom-progress"></ion-progress-bar>
+      <p class="progress-footer">
+        Faltan <strong>{{ totalDeuda | currency }}</strong> por recuperar de un total de <strong>{{ totalOriginal | currency }}</strong>.
+      </p>
+    </div>
+  </div>
+
+  <!-- Top Debtors -->
+  <div class="section-container ion-padding-horizontal">
+    <ion-list-header mode="ios">
+      <ion-label>Mayores saldos pendientes</ion-label>
+    </ion-list-header>
+
+    <ion-list mode="ios" class="inset-list no-margin-top">
+      <ion-item *ngFor="let cliente of topDeudores" [routerLink]="['/detalle-cliente', cliente.id]" button detail>
+        <ion-avatar slot="start">
+          <img [src]="cliente.foto ? cliente.foto : './assets/avatars/FotoCamara.png'" />
+        </ion-avatar>
+        <ion-label>
+          <h2>{{ cliente.nombre }} {{ cliente.apellido }}</h2>
+          <p>{{ clienteService.getEstadoCliente(cliente.id).texto }}</p>
+        </ion-label>
+        <ion-note slot="end" color="danger" class="debt-note">
+          - {{ cliente.totalDeuda | currency }}
+        </ion-note>
+      </ion-item>
+
+      <ion-item *ngIf="topDeudores.length === 0" lines="none">
+        <ion-label color="medium" class="ion-text-center">
+          ¡Excelente! No hay saldos pendientes.
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>
