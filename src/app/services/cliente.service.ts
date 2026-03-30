@@ -5,6 +5,7 @@ import { Cliente } from '../interfaces/Clientes';
 import { Adeudo } from '../interfaces/Adeudos';
 import { Pago } from '../interfaces/Pagos';
 import { UiService } from './ui-service.service';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,7 @@ export class ClienteService {
 
   constructor(private storage: Storage,
     private platform: Platform,
+    private notificationService: NotificationService,
     private uiService: UiService) {
     this.init();
   }
@@ -63,6 +65,12 @@ export class ClienteService {
   }
 
   async eliminarCliente(id: number) {
+    // 0. Eliminar notificaciones antes de limpiar adeudos
+    const adeudosCliente = this.adeudos.filter(a => a.idCliente === id);
+    for (const a of adeudosCliente) {
+       await this.notificationService.cancelarRecordatorio(a.id);
+    }
+
     // 1. Eliminar pagos asociados al cliente
     this.pagos = this.pagos.filter(p => p.idCliente !== id);
     await this.saveData('pagos', this.pagos);
@@ -114,9 +122,15 @@ export class ClienteService {
       }
     }
 
+    // Programar notificación de vencimiento
+    const cliente = this.getClienteById(adeudo.idCliente);
+    if (cliente && (adeudo.aDeber || 0) > 0) {
+       await this.notificationService.programarRecordatorio(adeudo, cliente);
+    }
+
     await this.saveData('adeudos', this.adeudos);
     await this.saveData('idAdeudoContador', this.idAdeudoContador);
-    this.uiService.presentToast('Adeudo registrado');
+    this.uiService.presentToast('Adeudo registrado y vencimiento agendado');
   }
 
   async cargarAdeudos() {
@@ -144,12 +158,21 @@ export class ClienteService {
     if (adeudo) {
       adeudo.aDeber = (adeudo.aDeber || 0) - (pago.monto || 0);
       if (adeudo.aDeber < 0) adeudo.aDeber = 0;
+
+      // Si el adeudo ya se liquidó, cancelar la notificación pendiente
+      if (adeudo.aDeber === 0) {
+        await this.notificationService.cancelarRecordatorio(adeudo.id);
+        this.uiService.presentToast('Liquidación completa: Recordatorio cancelado');
+      }
     }
 
     await this.saveData('pagos', this.pagos);
     await this.saveData('adeudos', this.adeudos);
     await this.saveData('idPagoContador', this.idPagoContador);
-    this.uiService.presentToast('Pago registrado correctamente');
+    
+    if (adeudo && adeudo.aDeber! > 0) {
+        this.uiService.presentToast('Pago registrado correctamente');
+    }
   }
 
   async cargarPagos() {
@@ -167,6 +190,9 @@ export class ClienteService {
   // --- ADEUDOS ---
 
   async eliminarAdeudo(id: number) {
+    // 0. Cancelar notificación
+    await this.notificationService.cancelarRecordatorio(id);
+
     // 1. Eliminar pagos asociados
     this.pagos = this.pagos.filter(p => p.idAdeudo !== id);
     await this.saveData('pagos', this.pagos);
@@ -175,7 +201,7 @@ export class ClienteService {
     this.adeudos = this.adeudos.filter(a => a.id !== id);
     await this.saveData('adeudos', this.adeudos);
 
-    this.uiService.presentToast('Adeudo y sus pagos eliminados');
+    this.uiService.presentToast('Adeudo y avisos eliminados');
   }
 
   // --- PAGOS ---
@@ -187,8 +213,17 @@ export class ClienteService {
     // 1. Restaurar el saldo en el adeudo
     const adeudo = this.adeudos.find(a => a.id === pago.idAdeudo);
     if (adeudo) {
+      const eraLiquido = adeudo.aDeber === 0;
       adeudo.aDeber = (adeudo.aDeber || 0) + (pago.monto || 0);
       await this.saveData('adeudos', this.adeudos);
+
+      // Si el pago restaurado hace que deba de nuevo, re-agendar notificación si es deudor ahora
+      if (eraLiquido && (adeudo.aDeber || 0) > 0) {
+          const cliente = this.getClienteById(adeudo.idCliente);
+          if (cliente) {
+              await this.notificationService.programarRecordatorio(adeudo, cliente);
+          }
+      }
     }
 
     // 2. Eliminar el pago
