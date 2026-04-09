@@ -21,7 +21,8 @@ export class ClientesPage implements OnInit {
 
   ngOnInit() {}
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
+    await this.clienteService.ready();
     this.aplicarFiltros();
   }
 

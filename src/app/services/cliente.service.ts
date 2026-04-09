@@ -21,11 +21,17 @@ export class ClienteService {
   pagos: Pago[] = [];
   busquedaClientes: Cliente[] = [];
 
+  private _isReady: Promise<void>;
+
   constructor(private storage: Storage,
     private platform: Platform,
     private notificationService: NotificationService,
     private uiService: UiService) {
-    this.init();
+    this._isReady = this.init();
+  }
+
+  async ready() {
+    return this._isReady;
   }
 
   async init() {

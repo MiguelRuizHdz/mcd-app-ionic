@@ -33,7 +33,8 @@ export class CobroPage implements OnInit {
         private toastCtrl: ToastController
     ) { }
 
-    ngOnInit() {
+    async ngOnInit() {
+        await this.clienteService.ready();
         const idAdeudo = this.activatedRoute.snapshot.paramMap.get('idAdeudo');
         const total = this.activatedRoute.snapshot.queryParamMap.get('total');
 

@@ -46,7 +46,7 @@ export class AgregarClientePage implements OnInit {
     }
   }
 
-  guardarCliente(fNuevoCliente: NgForm) {
+  async guardarCliente(fNuevoCliente: NgForm) {
     if (fNuevoCliente.invalid) {
       this.uiService.presentToast('Llene los campos correctamente');
       return;
@@ -57,7 +57,7 @@ export class AgregarClientePage implements OnInit {
       this.nuevoCliente.telefono = telStr ? Number(telStr) : undefined;
     }
 
-    this.clienteService.guardarCliente(this.nuevoCliente);
+    await this.clienteService.guardarCliente(this.nuevoCliente);
     this.navCtrl.navigateBack('tabs/clientes');
   }
 

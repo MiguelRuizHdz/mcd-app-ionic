@@ -28,7 +28,8 @@ export class DetalleClientePage implements OnInit {
   ngOnInit() {
   }
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
+    await this.clienteService.ready();
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id) {
       this.cliente = this.clienteService.getClienteById(parseInt(id));

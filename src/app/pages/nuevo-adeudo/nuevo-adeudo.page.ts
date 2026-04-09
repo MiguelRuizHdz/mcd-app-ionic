@@ -25,16 +25,17 @@ export class NuevoAdeudoPage implements OnInit {
     private clienteService: ClienteService,
     private navCtrl: NavController) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.clienteService.ready();
     const idCliente = this.activatedRoute.snapshot.paramMap.get('idCliente');
     if (idCliente) {
       this.adeudo.idCliente = parseInt(idCliente);
     }
   }
 
-  crearAdeudo() {
+  async crearAdeudo() {
     if (!this.adeudo.concepto || this.adeudo.concepto.length < 2 || (this.adeudo.precio || 0) <= 0) return;
-    this.clienteService.guardarAdeudo(this.adeudo);
+    await this.clienteService.guardarAdeudo(this.adeudo);
     this.navCtrl.back();
   }
 

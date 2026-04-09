@@ -28,7 +28,8 @@ export class EditarClientePage implements OnInit {
     private router: Router,
     private navCtrl: NavController) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.clienteService.ready();
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id) {
       const resp = this.clienteService.getClienteById(parseInt(id));
@@ -58,13 +59,13 @@ export class EditarClientePage implements OnInit {
     }
   }
 
-  guardarCliente(fEditarCliente: NgForm) {
+  async guardarCliente(fEditarCliente: NgForm) {
     if (fEditarCliente.invalid) return;
     if (this.cliente.telefono) {
       const telStr = String(this.cliente.telefono).replace(/\s+/g, '');
       this.cliente.telefono = telStr ? Number(telStr) : undefined;
     }
-    this.clienteService.guardarCliente(this.cliente);
+    await this.clienteService.guardarCliente(this.cliente);
     this.navCtrl.back();
   }
 

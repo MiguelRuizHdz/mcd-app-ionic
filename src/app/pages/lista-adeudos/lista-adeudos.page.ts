@@ -25,7 +25,8 @@ export class ListaAdeudosPage implements OnInit {
   ngOnInit() {
   }
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
+    await this.clienteService.ready();
     const idCliente = this.activatedRoute.snapshot.paramMap.get('idCliente');
     if (idCliente) {
       this.cliente = this.clienteService.getClienteById(parseInt(idCliente));
